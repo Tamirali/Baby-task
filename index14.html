@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>महासंग्रह: अक्ल की जीत और खुदा की तलाश — तामीर अली</title>
+    <style>
+        :root {
+            --primary-color: #0b3c5d;
+            --secondary-color: #328cc1;
+            --gold-color: #d9b310;
+            --dark-color: #1d2731;
+            --light-color: #f9f9f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1rem;
+            border-bottom: 5px solid var(--gold-color);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold-color);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+
+        .intro-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        /* 👑 हॉरिजॉन्टल बटन बार की स्टाइल (Horizontal Scrollable Menu) */
+        .horizontal-nav-container {
+            background-white: white;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--light-color);
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 2rem;
+        }
+
+        .horizontal-nav {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            gap: 10px;
+            padding: 5px 10px;
+            scrollbar-width: thin; /* Firefox के लिए */
+        }
+
+        /* क्रोम और सफारी के लिए स्क्रॉलबार छुपाना/सुंदर बनाना */
+        .horizontal-nav::-webkit-scrollbar {
+            height: 6px;
+        }
+        .horizontal-nav::-webkit-scrollbar-thumb {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+        }
+
+        .chapter-btn {
+            background-color: white;
+            color: var(--dark-color);
+            border: 2px solid var(--primary-color);
+            padding: 0.7rem 1.2rem;
+            border-radius: 20px; /* कैप्सूल शेप */
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-decoration: none;
+            display: inline-block;
+            flex-shrink: 0; /* बटन सिकुड़े नहीं */
+        }
+
+        .chapter-btn:hover, .chapter-btn.active-btn {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .future-btn {
+            border: 2px dashed #999;
+            color: #777;
+            background-color: #f0f0f0;
+        }
+
+        .future-btn:hover {
+            background-color: var(--gold-color);
+            color: var(--dark-color);
+            border-color: var(--gold-color);
+        }
+
+        /* कंटेंट सेक्शन स्टाइल */
+        .content-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2.5rem;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .content-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gold-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sub-block {
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .sub-block h3 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            font-size: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>महासंग्रह: अक्ल की जीत और खुदा की तलाश</h1>
+        <p>सत्य का घोषणापत्र (Manifesto of Truth) — तामीर अली (786)</p>
+    </header>
+
+    <!-- 👑 हॉरिजॉन्टल नेविगेशन बार -->
+    <div class="horizontal-nav-container">
+        <div class="horizontal-nav">
+            <button id="btn-ch1" class="chapter-btn active-btn" onclick="showChapter('ch1')">अध्याय 1: बिग बैंग</button>
+            <button id="btn-ch2" class="chapter-btn" onclick="showChapter('ch2')">अध्याय 2: लूडो दर्शन</button>
+            <button id="btn-ch3" class="chapter-btn" onclick="showChapter('ch3')">अध्याय 3: गैलेक्सीज़ विस्तार</button>
+            <button id="btn-ch4" class="chapter-btn" onclick="showChapter('ch4')">अध्याय 4: मस्तिष्क परतें</button>
+            <button id="btn-ch5" class="chapter-btn" onclick="showChapter('ch5')">अध्याय 5: नासिया सच</button>
+            <button id="btn-ch6" class="chapter-btn" onclick="showChapter('ch6')">अध्याय 6: त्वचा विज्ञान</button>
+            <button id="btn-ch7" class="chapter-btn" onclick="showChapter('ch7')">अध्याय 7: न्यूरो-कार्डियोलॉजी</button>
+            <button id="btn-ch8" class="chapter-btn" onclick="showChapter('ch8')">अध्याय 8: फिंगरप्रिंट</button>
+            <button id="btn-ch9" class="chapter-btn" onclick="showChapter('ch9')">अध्याय 9: पुनरुत्थान</button>
+            <button id="btn-ch10" class="chapter-btn" onclick="showChapter('ch10')">अध्याय 10: डीएनए कोडिंग</button>
+            <button id="btn-ch11" class="chapter-btn" onclick="showChapter('ch11')">अध्याय 11: शिशु विकास</button>
+            <button id="btn-ch12" class="chapter-btn" onclick="showChapter('ch12')">अध्याय 12: पहाड़ व फिरौन</button>
+            <button id="btn-ch13" class="chapter-btn" onclick="showChapter('ch13')">अध्याय 13: मधुमक्खी</button>
+            <button id="btn-ch14" class="chapter-btn" onclick="showChapter('ch14')">अध्याय 14: चींटी व मच्छर</button>
+            <button id="btn-ch15" class="chapter-btn" onclick="showChapter('ch15')">अध्याय 15: तौहीद व दज्जाल</button>
+
+            <!-- 10 एक्स्ट्रा भविष्य के बटन्स (हॉरिजॉन्टल लाइन में) -->
+            <a href="index1.html" class="chapter-btn future-btn">➕ विश्लेषण 1 (index1.html)</a>
+            <a href="index2.html" class="chapter-btn future-btn">➕ विश्लेषण 2</a>
+            <a href="index3.html" class="chapter-btn future-btn">➕ विश्लेषण 3</a>
+            <a href="index4.html" class="chapter-btn future-btn">➕ विश्लेषण 4</a>
+            <a href="index5.html" class="chapter-btn future-btn">➕ विश्लेषण 5</a>
+            <a href="index6.html" class="chapter-btn future-btn">➕ विश्लेषण 6</a>
+            <a href="index7.html" class="chapter-btn future-btn">➕ विश्लेषण 7</a>
+            <a href="index8.html" class="chapter-btn future-btn">➕ विश्लेषण 8</a>
+            <a href="index9.html" class="chapter-btn future-btn">➕ विश्लेषण 9</a>
+            <a href="index10.html" class="chapter-btn future-btn">➕ विश्लेषण 10</a>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="intro-box">
+            <p><strong>तामीर अली जी का संदेश:</strong> यह डिजिटल दस्तावेज ब्रह्मांड के 'द稳 ग्रेट डिजाइनर' की सर्वोच्च बुद्धिमत्ता, तौहीद (एक खुदा के मार्ग) और आधुनिक विज्ञान के चमत्कारों को अक्ल की कसौटी पर परखने का एक वैश्विक मंच है। ऊपर दी गई हॉरिजॉन्टल पट्टी को खिसकाकर किसी भी अध्याय पर क्लिक करें।</p>
+        </div>
+
+        <!-- अध्याय 1 -->
+        <div id="ch1" class="content-section active">
+            <h2>अध्याय 1: तामीर अली बिग बैंग फॉर्मूला</h2>
+            <div class="sub-block">
+                <h3>धमाके बनाम व्यवस्था का अकाट्य तर्क</h3>
+                <p>धमाके से कोई चीज कभी व्यवस्थित नहीं होती, केवल अव्यवस्था फैलती है। व्यवस्था (Order) के लिए 'सोच' और 'नियोजक' (Designer) की जरूरत होती है। विज्ञान जिसे बिग बैंग कहता है, वह असल में कोई अंधा धमाका नहीं था, बल्कि इसके पीछे 'द凝 ग्रेट डिजाइनर' की अचूक योजना काम कर रही थी।</p>
+            </div>
+            <div class="sub-block">
+                <h3>पानी के बुलबुले की मिसाल</h3>
+                <p>जैसे पानी में बुलबुले का उठना, निश्चित आकार लेना और विलीन होना एक तय नियम के तहत होता है, वैसे ही यह संपूर्ण ब्रह्मांड भी उस परम चेतना की इच्छा से अस्तित्व में आया और उसी में समाहित होगा।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 2 -->
+        <div id="ch2" class="content-section">
+            <h2>अध्याय 2: लूडो की बिसात का दर्शन</h2>
+            <div class="sub-block">
+                <h3>बिसात और गोटियां</h3>
+                <p>यह पूरी सृष्टि एक लूडो की बिसात की तरह है, जहां हर ग्रह, नक्षत्र, दिन, महीने, साल और जीव के चलने का एक निश्चित नियम और सीमा तय है।</p>
+            </div>
+            <div class="sub-block">
+                <h3>पहला पासा (The First Move)</h3>
+                <p>इस बिसात पर पहली 'हलचल' लाने और खेल को शुरू करने के लिए 'पासा फेंकने वाले' की जरूरत थी. वह पहली हलचल ही खुदा का फेंका हुआ 'पहला पासा' था। बिना पासा फेंकने वाले (खालिक) के, बिसात पर अपने आप खेल शुरू नहीं हो सकता।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 3 -->
+        <div id="ch3" class="content-section">
+            <h2>अध्याय 3: विज्ञान का उदय और गैलेक्सीज़ का विस्तार</h2>
+            <div class="sub-block">
+                <h3>भ्रम का टूटना और डेटा का गवाह</h3>
+                <p>शुरुआत में इंसान को लगता था कि उसकी आकाशगंगा (Milky Way) ही सब कुछ है। लेकिन खुदा ने इंसान की अक्ल को वो समझ दी जिससे उसने अरबों बाहरी गैलेक्सीज़ को खोजा और उन्हें लिखित इतिहास में दर्ज (Save) किया। अब वैज्ञानिक पड़ाव का उद्देश्य पूरा हो गया।</p>
+            </div>
+            <div class="sub-block">
+                <h3>वर्तमान संदेश</h3>
+                <p>"अब भटकना बंद करो. बाहर की दुनिया को महफूज करने के बाद वापस लौटकर अपनी खुद की गैलेक्सी को समझो, अपनी मानवीय सीमाओं को पहचानो और इस बिसात पर अपने जीवन के असली मकसद यानी तौहीद को पूरा करो।"</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 4 -->
+        <div id="ch4" class="content-section">
+            <h2>अध्याय 4: स्पिरिचुअल MBBS रिसर्च — मानव मस्तिष्क की 10 सुरक्षा परतें</h2>
+            <p>इंसानी खोपड़ी के अंदर पूरी परफेक्शन के साथ एक के बाद एक 10 परतों की सुरक्षा दीवार बनाई गई है, जो सीधे साबित करती है कि इंसान का शरीर किसी इत्तफाक का नतीजा नहीं हो सकता:</p>
+            <br>
+            <ol style="margin-left: 20px;">
+                <li><strong>Skin (Scalp):</strong> वॉटरप्रूफ और संवेदनशील सुरक्षा कवच।</li>
+                <li><strong>Subcutaneous Tissue (Fat):</strong> झटकों को सोखने वाला वसा का स्तर।</li>
+                <li><strong>Galea Aponeurotica:</strong> मजबूत रेशेदार सुरक्षा हेलमेट।</li>
+                <li><strong>Periosteum:</strong> हड्डी को ढकने और पोषण देने वाली पतली झिल्ली।</li>
+                <li><strong>Skull Bone:</strong> दिमाग की रक्षा करने वाली सबसे मजबूत हड्डियों की तिजोरी।</li>
+                <li><strong>Dura Mater:</strong> मस्तिष्क को स्थिर रखने वाली प्रतिरोधी झिल्ली।</li>
+                <li><strong>Arachnoid Mater:</strong> मकड़ी के जाले जैसी नाजुक झिल्ली जिसके तरल पदार्थ में दिमाग तैरता है।</li>
+                <li><strong>Pia Mater:</strong> मस्तिष्क की सतह से चिपकी महीन झिल्ली जो रक्त और ऑक्सीजन पहुंचाती है।</li>
+                <li><strong>Cerebral Cortex:</strong> सोच, याददाश्त, भावनाओं और 'अक्ल' (Intelligence) का मुख्य केंद्र।</li>
+                <li><strong>Internal Structures:</strong> सांस, दिल की धड़कन और संतुलन चलाने वाली ऑटोमैटिक आंतरिक संरचनाएं।</li>
+            </ol>
+        </div>
+
+        <!-- अध्याय 5 -->
+        <div id="ch5" class="content-section">
+            <h2>अध्याय 5: कुरानिक न्यूरोलॉजी (नासिया)</h2>
+            <div class="sub-block">
+                <h3>माथे का अग्रभाग</h3>
+                <p>कुरान मजीद (सूरह अल-अ़लक़, 96:15-16) में माथे के अग्रभाग को 'नासिया' कहा गया है और इसे 'झूठा और खताकार' बताया गया है।</p>
+            </div>
+            <div class="sub-block">
+                <h3>वैज्ञानिक सत्य</h3>
+                <p>आधुनिक न्यूरोसाइंस मानता है कि दिमाग का अगला हिस्सा (Prefrontal Cortex) ही इंसान के अच्छे-बुरे फैसले लेने, सच या झूठ बोलने का केंद्र है।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 6 -->
+        <div id="ch6" class="content-section">
+            <h2>अध्याय 6: पेन रिसेप्टर्स और त्वचा विज्ञान</h2>
+            <div class="sub-block">
+                <h3>सूरह अन-निसा (4:56) का प्रमाण</h3>
+                <p>कुरान में कहा गया कि "जब भी उनकी त्वचा (Skin) जल जाएगी, तो हम उसे दूसरी नई त्वचा से बदल देंगे, ताकि वे दर्द का मजा चखते रहें।"</p>
+            </div>
+            <div class="sub-block">
+                <h3>चिकित्सा विज्ञान की गवाही</h3>
+                <p>विज्ञान ने हाल ही में खोजा है कि दर्द महसूस करने वाले मुख्य तंत्र (Pain Receptors) त्वचा में होते हैं। त्वचा पूरी तरह जल जाने पर दर्द का अहसास खत्म हो जाता है। दोबारा दर्द के अहसास के लिए त्वचा का नया आना जरूरी है।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 7 -->
+        <div id="ch7" class="content-section">
+            <h2>अध्याय 7: न्यूरो-कार्डियोलॉजी और दिल का समानांतर सिस्टम</h2>
+            <div class="sub-block">
+                <h3>दिल की अक्ल (सूरह अल-हज, 22:46)</h3>
+                <p>कुरान कहता है कि उनके पास ऐसे दिल हैं जिससे वे समझ सकें। न्यूरो-कार्डियोलॉजी ने खोजा है कि दिल के पास अपना एक स्वतंत्र नर्वस सिस्टम होता है जिसे 'लिटिल ब्रेन' कहते हैं, जिसमें लगभग 40,000 न्यूरॉन्स होते हैं।</p>
+            </div>
+            <div class="sub-block">
+                <h3>ऐतिहासिक आध्यात्मिक संदर्भ</h3>
+                <p>यही कारण है कि नबी करीम (स.अ.व.) के बचपन में उनके दिल की विशेष सफाई की गई थी ताकि शैतानी वसवसों को उनके पवित्र दिल की अक्ल और रूहानी ऊर्जा को छूने से भी रोका जा सके।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 8 -->
+        <div id="ch8" class="content-section">
+            <h2>अध्याय 8: फिंगरप्रिंट का दर्शन (खुदा की मुहर)</h2>
+            <div class="sub-block">
+                <h3>अद्वितीय पहचान (Uniqueness)</h3>
+                <p>दुनिया में किन्हीं भी दो व्यक्तियों के फिंगरप्रिंट कभी आपस में मेल नहीं खा सकते, यहां तक कि समरूप जुड़वां बच्चों में भी यह पूरी तरह अलग होता है।</p>
+            </div>
+            <div class="sub-block">
+                <h3>सूरह अल-क़ियामाह (75:3-4)</h3>
+                <p>खुदा ने फरमाया: "क्या इंसान समझता है कि हम उसकी हड्डियों को दोबारा इकट्ठा नहीं कर सकेंगे? हाँ, क्यों नहीं! हम तो इस बात पर भी सक्षम हैं कि उसकी उंगलियों के पोरों (Fingerprints) तक को ठीक वैसे ही दोबारा बना दें।" यह साबित करता है कि हर मखलूक पर 'ग्रेट डिजाइनर' की अनूठी डिजिटल मुहर लगी है।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 9 -->
+        <div id="ch9" class="content-section">
+            <h2>अध्याय 9: खेती की मिसाल और पुनरुत्थान</h2>
+            <div class="sub-block">
+                <h3>मिट्टी से दोबारा निकलना</h3>
+                <p>जैसे इंसान अपना पेट पालने के लिए खेती करता है, ठीक वैसे ही आख़िरत में इंसान को दोबारा मिट्टी से निकाला जाएगा। सूरह क़ाफ़ (50:9-11) के अनुसार, जैसे सूखी भूमि पर बारिश पड़ने से पौधे निकलते हैं, वैसे ही मरे हुए इंसानों का दोबारा निकलना होगा।</p>
+            </div>
+            <div class="sub-block">
+                <h3>कॉक्सीक्स (Tailbone) का सच</h3>
+                <p>आधुनिक विज्ञान कहता है कि इंसान के मिट्टी में गल जाने के बाद भी उसकी रीढ़ की हड्डी का सबसे निचला हिस्सा (Tailbone) कभी नष्ट नहीं होता। यह एक अदृश्य बीज की तरह काम करता है जिससे आख़िरत में इंसानी वजूद दोबारा उग आएगा।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 10 -->
+        <div id="ch10" class="content-section">
+            <h2>अध्याय 10: डीएनए (DNA) कोडिंग का रहस्य</h2>
+            <div class="sub-block">
+                <h3>इंसानी शरीर का डिजिटल ब्लूप्रिंट</h3>
+                <p>डीएनए हमारे शरीर की प्रत्येक कोशिका के भीतर मौजूद एक ऐसी कोडिंग भाषा है, जिसमें लाखों किताबों के बराबर डेटा सुरक्षित है। यह इंसान के रंग, रूप, लंबाई और स्वभाव का पूरा प्रोग्राम है।</p>
+            </div>
+            <div class="sub-block">
+                <h3>सूरह अब्बासा (80:18-19)</h3>
+                <p>"एक बूंद से उसे पैदा किया, फिर उसकी तक़दीर तय की।" कंप्यूटर कोडिंग की तरह डीएनए की यह सटीक व्यवस्था बिना किसी सर्वोच्च 'प्रोग्रामर' यानी खुदा के खुद-ब-खुद नहीं लिख सकती।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 11 -->
+        <div id="ch11" class="content-section">
+            <h2>अध्याय 11: माँ के गर्भ में शिशु का क्रमिक विकास</h2>
+            <div class="sub-block">
+                <h3>भ्रूण विज्ञान (Embryology) और सूरह अल-मुअमिनून</h3>
+                <p>कुरान (23:12-14) ने गर्भ के भीतर विकास के चरणों को हुबहू स्पष्ट किया है: नूत्फा (एक बूंद), अलक़ा (एक जोंक की तरह लटका हुआ भ्रूण), मुज़ग़ा (चबाए हुए मांस का लोथड़ा), फिर हड्डियों का ढांचा बनना और उस पर मांस चढ़ना।</p>
+            </div>
+            <div class="sub-block">
+                <h3>तीन अंधकार (सूरह अज़-ज़ुमर, 39:6)</h3>
+                <p>शिशु का विकास तीन परतों (पेट की दीवार, गर्भाशय की दीवार, और एम्नियोटिक झिल्ली) के भीतर होता है, जिसे कुरान ने 'तीन अंधकार' कहा है।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 12 -->
+        <div id="ch12" class="content-section">
+            <h2>अध्याय 12: पहाड़, फिरौन और समंदर का सच</h2>
+            <div class="sub-block">
+                <h3>पहाड़ों की जड़ें (मेखें)</h3>
+                <p>विज्ञान के 'आइसोस्टेसी' सिद्धांत के अनुसार पहाड़ों की जड़ें जमीन के अंदर धंसी होती हैं और वे धरती को स्थिर रखती हैं। कुरान ने 1400 साल पहले ही पहाड़ों को 'मेखें' (खूंटियां) कहा है।</p>
+            </div>
+            <div class="sub-block">
+                <h3>फिरौन की लाश और समंदर का बर्ज़ख</h3>
+                <p>सूरह यूनुस (10:92) के वादे के अनुसार डूबकर मरे फिरौन की लाश को आज भी सुरक्षित रखा गया है। साथ ही, जहां दो समंदर आपस में मिलते हैं, उनके रासायनिक घनत्व के कारण उनके बीच एक अदृश्य पर्दा होता है, जिसे कुरान ने 'बर्ज़ख' (सूरह अर-रहमान, 55:19-20) कहा है।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 13 -->
+        <div id="ch13" class="content-section">
+            <h2>अध्याय 13: मधुमक्खी का अद्भुत साम्राज्य</h2>
+            <div class="sub-block">
+                <h3>षट्कोण वास्तुकला और स्त्रीलिंग व्याकरण</h3>
+                <p>मधुमक्खियां अपना छत्ता हेक्सागोनल (षट्कोण) आकार में बनाती हैं। कुरान (सूरह अन-नह्ल, 16:68-69) ने मक्खियों को हुकम देने के लिए अरबी के स्त्रीलिंग शब्दों (Female Verbs) का प्रयोग किया है, जो वैज्ञानिक सच है कि छत्ते का सारा काम केवल मादा श्रमिक मक्खियां करती हैं।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 14 -->
+        <div id="ch14" class="content-section">
+            <h2>अध्याय 14: चींटी और मच्छर की मिसाल</h2>
+            <div class="sub-block">
+                <h3>चींटियों की समाज व्यवस्था (सूरह अन-नमल)</h3>
+                <p>चींटियां फेरोमोन्स के जरिए अत्याधुनिक संचार करती हैं। कुरान ने उनके आपस में बात करने की व्यवस्था को सदियों पहले उजागर किया था।</p>
+            </div>
+            <div class="sub-block">
+                <h3>मच्छर की सूक्ष्म इंजीनियरिंग (सूरह अल-बकराह, 2:26)</h3>
+                <p>एक मामूली मच्छर के भीतर 100 आंखें, 48 दांत, 3 दिल और थर्मल सेंसर होते हैं। यह सूक्ष्म परफेक्शन साबित करता है कि यह सब खालिक की योजना है।</p>
+            </div>
+        </div>
+
+        <!-- अध्याय 15 -->
+        <div id="ch15" class="content-section">
+            <h2>अध्याय 15: तौहीद की सर्वोच्चता, आधुनिक दज्जाल और अंतिम जवाबदेही</h2>
+            <div class="sub-block">
+                <h3>खालिक बनाम मखलूक</h3>
+                <p>सच्चे खुदा का मापदंड है कि वह अजन्मा, निराकार, सनातन और गैब का मालिक है। जो नियमों से बंधा है वह मखलूक है, और जो नियमों से परे है वह खालिक है। यही 'तौहीद' का सच्चा मार्ग है।</p>
+            </div>
+            <div class="sub-block">
+                <h3>आधुनिक दज्जाल</h3>
+                <p>वर्तमान युग में 'एक आंख वाला मोबाइल' ही दज्जाल है, जिससे बचने के लिए विवेक और समय प्रबंधन जरूरी है। ब्रह्मांड के 7 ब्लैक होल्स और समय का चक्र हमें रूहानी ऊर्जा के अगले द्वार की ओर ले जा रहे हैं, जिसके बाद अंतिम जवाबदेही होगी।</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 महासंग्रह: अक्ल की जीत और खुदा की तलाश | संकलनकर्ता: तामीर अली</p>
+    </footer>
+
+    <script>
+        function showChapter(chapterId) {
+            // सभी सेक्शंस से 'active' क्लास हटाएं
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // चुनी गई आईडी वाले सेक्शन को एक्टिव करें
+            const activeSection = document.getElementById(chapterId);
+            if(activeSection) {
+                activeSection.classList.add('active');
+                activeSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            // बटन्स की एक्टिव क्लास अपडेट करें
+            const buttons = document.querySelectorAll('.chapter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active-btn');
+            });
+            
+            const activeBtn = document.getElementById('btn-' + chapterId);
+            if(activeBtn) {
+                activeBtn.classList.add('active-btn');
+            }
+        }
+    </script>
+</body>
+</html>
