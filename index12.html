@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realistic Open Hair News Anchor</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0b111e;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            user-select: none;
+        }
+        h2 {
+            color: #f1c40f;
+            text-align: center;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        p.subtitle {
+            font-size: 0.85rem;
+            color: #a6b8c7;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* 📺 वर्चुअल न्यूज़ रूम स्टूडियो स्टेज */
+        .stage {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 4 / 3;
+            background: linear-gradient(180deg, #091c36 0%, #0d2b45 50%, #153e61 100%);
+            border: 4px solid #1a252f;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+        }
+
+        .studio-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background-image: 
+                radial-gradient(circle at 80% 20%, rgba(41, 128, 185, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(231, 76, 60, 0.15) 0%, transparent 60%);
+            opacity: 0.9;
+        }
+        .bg-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* 👩‍💼 एंकर कंटेनर */
+        .anchor-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 3;
+        }
+
+        /* 💇‍♀️ दोनों तरफ बिखरे हुए असली लहराते बाल (Back Layer) */
+        .hair-flow-left, .hair-flow-right {
+            position: absolute;
+            top: 65px;
+            width: 55px;
+            height: 145px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #151515 70%, #222 100%);
+            z-index: 1;
+            transform-origin: top center;
+            transition: transform 0.05s ease;
+        }
+        .hair-flow-left {
+            left: 135px;
+            border-radius: 40px 0 30px 60px;
+            box-shadow: -4px 4px 10px rgba(0,0,0,0.4);
+        }
+        .hair-flow-right {
+            right: 135px;
+            border-radius: 0 40px 60px 30px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+        }
+
+        /* बॉडी फ्रेम - मॉडर्न साड़ी लुक */
+        .anchor-body {
+            position: absolute;
+            bottom: 40px;
+            width: 190px;
+            height: 130px;
+            background: linear-gradient(135deg, #943126 0%, #78281f 100%);
+            border-radius: 45px 45px 0 0;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .saree-layer {
+            position: absolute;
+            top: 0;
+            left: 15px;
+            width: 55px;
+            height: 150%;
+            background: linear-gradient(90deg, #d4af37 0%, #b8860b 20%, #c0392b 40%, #943126 100%);
+            transform: rotate(-18deg);
+        }
+
+        /* गर्दन */
+        .anchor-neck {
+            position: absolute;
+            top: 138px;
+            width: 30px;
+            height: 35px;
+            background: linear-gradient(to bottom, #f7c59f, #e5ab7e);
+            z-index: 3;
+        }
+
+        /* चेहरा (Realistic Features) */
+        .anchor-head {
+            position: absolute;
+            top: 55px;
+            width: 94px;
+            height: 112px;
+            background: linear-gradient(180deg, #fddbb5 0%, #f7c59f 100%);
+            border-radius: 47px 47px 48px 48px;
+            z-index: 4;
+            transform-origin: bottom center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* माथे के बाल (Front Layer) */
+        .hair-top {
+            position: absolute;
+            top: -4px;
+            left: 0;
+            width: 100%;
+            height: 35px;
+            background: #0a0a0a;
+            border-radius: 40px 40px 0 0;
+            z-index: 5;
+        }
+
+        /* बिंदी और नाक */
+        .bindi {
+            position: absolute;
+            top: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: #c0392b;
+            border: 1px solid #f1c40f;
+            border-radius: 50%;
+            z-index: 6;
+        }
+        .nose {
+            position: absolute;
+            top: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 14px;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.07));
+            border-bottom: 2px solid rgba(0,0,0,0.12);
+        }
+
+        /* 👀 दोनों तरफ की परफेक्ट सिमेट्रिकल आँखें */
+        .eye-container {
+            position: absolute;
+            top: 44px;
+            width: 20px;
+            height: 10px;
+            background-color: #111; /* काजल/लाइनर इफ़ेक्ट */
+            border-radius: 50% 50% 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .eye-l-pos { left: 16px; }
+        .eye-r-pos { right: 16px; }
+        
+        .eye-ball {
+            width: 18px;
+            height: 8px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transform-origin: center;
+        }
+        .pupil {
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #333 0%, #000 70%);
+            border-radius: 50%;
+        }
+
+        /* 👄 लिपस्टिक और वॉयस माउथ नोड */
+        .mouth-wrapper {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28px;
+            height: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .lip-up {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #b03a2e;
+            border-radius: 50% 50% 0 0;
+        }
+        .mouth-core {
+            position: absolute;
+            top: 3px;
+            width: 22px;
+            height: 2px;
+            background-color: #3d1003;
+            border-radius: 50%;
+            transform-origin: center;
+            transition: height 0.04s ease, transform 0.04s ease;
+            z-index: 5;
+        }
+        .lip-down {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #c0392b;
+            border-radius: 0 0 50% 50%;
+        }
+
+        /* आधुनिक न्यूज़ डेस्क */
+        .news-desk {
+            position: absolute;
+            bottom: 25px;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            background: linear-gradient(180deg, rgba(28, 40, 51, 0.95) 0%, rgba(21, 31, 42, 0.98) 100%);
+            border-top: 3px solid #f1c40f;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .desk-logo {
+            background: linear-gradient(90deg, #d4af37, #f1c40f);
+            color: #111;
+            padding: 3px 25px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        /* 📰 रनिंग न्यूज़ पट्टी */
+        .ticker-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 26px;
+            background-color: #943126;
+            z-index: 6;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        .ticker-title {
+            background-color: #f1c40f;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.75rem;
+            padding: 0 12px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            z-index: 7;
+        }
+        .ticker-text {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #ffffff;
+            animation: moveTicker 16s linear infinite;
+        }
+        @keyframes moveTicker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* 🎛️ कंट्रोलर हब */
+        .control-panel {
+            width: 100%;
+            max-width: 480px;
+            background: #14213d;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 1px solid #1c315e;
+        }
+        .timer-box {
+            background-color: #0b111e;
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .timer-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #a6b8c7;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background-color: #1c315e;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #f1c40f;
+            transition: width 1s linear;
+        }
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px 5px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-record { background-color: #d9383a; }
+        .btn-record.recording { background-color: #781d1e; animation: flash 1s infinite alternate; }
+        .btn-play { background-color: #27ae60; }
+        .btn-play:disabled { background-color: #7f8c8d; cursor: not-allowed; }
+        
+        @keyframes flash {
+            0% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Realistic Open-Hair News Engine</h2>
+    <p class="subtitle">अक्ल की जीत: रीयल-टाइम वॉइस लिप-सिंक और हेयर मोशन सिस्टम</p>
+
+    <div class="stage">
+        <div class="studio-bg"><div class="bg-lines"></div></div>
+
+        <div class="anchor-container">
+            <!-- दोनों तरफ बिखरे हुए असली बाल -->
+            <div id="hairL" class="hair-flow-left"></div>
+            <div id="hairR" class="hair-flow-right"></div>
+            
+            <div class="anchor-body"><div class="saree-layer"></div></div>
+            <div class="anchor-neck"></div>
+            
+            <div id="anchorHead" class="anchor-head">
+                <div class="hair-top"></div>
+                <div class="bindi"></div>
+                <div class="nose"></div>
+                
+                <!-- सममित आँखें -->
+                <div id="eyeLBox" class="eye-container eye-l-pos"><div class="eye-ball"><div class="pupil"></div></div></div>
+                <div id="eyeRBox" class="eye-container eye-r-pos"><div class="eye-ball"><div class="pupil"></div></div></div>
+                
+                <!-- लिपस्टिक और मुंह -->
+                <div class="mouth-wrapper">
+                    <div class="lip-up"></div>
+                    <div id="anchorMouth" class="mouth-core"></div>
+                    <div class="lip-down"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="news-desk">
+            <div class="desk-logo">LIVE NEWS</div>
+        </div>
+
+        <div class="ticker-bar">
+            <div class="ticker-title">🚨 LIVE</div>
+            <div class="ticker-text">तौहीद का मार्ग और अक्ल की जीत ही दुनिया का शाश्वत नियम है... अपनी आवाज रिकॉर्ड करें और लाइव बुलेटिन का आनंद लें...</div>
+        </div>
+    </div>
+
+    <div class="control-panel">
+        <div class="timer-box">
+            <div class="timer-info">
+                <span id="statusLabel">स्थिति: तैयार</span>
+                <span id="timerDisplay">00:00 / 05:00</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progressBar" class="progress-bar-fill"></div>
+            </div>
+        </div>
+
+        <div class="audio-controls">
+            <button id="recordBtn" class="btn btn-record">🎙️ रिकॉर्डिंग शुरू करें (Max 5 Min)</button>
+            <button id="playBtn" class="btn btn-play" disabled>▶️ बुलेटिन प्ले करें</button>
+        </div>
+    </div>
+
+    <script>
+        const mouthNode = document.getElementById('anchorMouth');
+        const headNode = document.getElementById('anchorHead');
+        const hairL = document.getElementById('hairL');
+        const hairR = document.getElementById('hairR');
+        const eyeLBox = document.getElementById('eyeLBox');
+        const eyeRBox = document.getElementById('eyeRBox');
+        
+        const recordBtn = document.getElementById('recordBtn');
+        const playBtn = document.getElementById('playBtn');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const progressBar = document.getElementById('progressBar');
+        const statusLabel = document.getElementById('statusLabel');
+
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioCtx, analyser, source;
+        let audioUrl = null;
+        let audioPlayback = null;
+        
+        let secondsElapsed = 0;
+        let timerInterval = null;
+        const maxSeconds = 300; 
+
+        // --- नेचुरल और कोमल मोशन लूप (Blinking & Hair/Head Movement) ---
+        let globalTime = 0;
+        function startNaturalMotion() {
+            function animate() {
+                globalTime += 0.06;
+                
+                // पलकें झपकना
+                if (Math.sin(globalTime * 0.3) > 0.96) {
+                    eyeLBox.style.transform = "scaleY(0.1)";
+                    eyeRBox.style.transform = "scaleY(0.1)";
+                } else {
+                    eyeLBox.style.transform = "scaleY(1)";
+                    eyeRBox.style.transform = "scaleY(1)";
+                }
+
+                // सिर और बिखरे हुए बालों का कोमल तालमेल (Dynamic Sway)
+                let tilt = Math.sin(globalTime * 0.15) * 1.5;
+                headNode.style.transform = `rotate(${tilt}deg) translateY(${Math.sin(globalTime*0.1)*0.5}px)`;
+                
+                // बाल भी सिर के हिलने के विपरीत दिशा में हल्के से तैरेंगे
+                hairL.style.transform = `rotate(${-tilt * 0.4}deg)`;
+                hairR.style.transform = `rotate(${-tilt * 0.4}deg)`;
+
+                requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        }
+        startNaturalMotion();
+
+        // --- माइक रिकॉर्डिंग व्यवस्था ---
+        recordBtn.addEventListener('click', async () => {
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        });
+
+        async function startRecording() {
+            audioChunks = [];
+            secondsElapsed = 0;
+            if(audioPlayback) audioPlayback.pause();
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioCtx.createAnalyser();
+                source = audioCtx.createMediaStreamSource(stream);
+                source.connect(analyser);
+                analyser.fftSize = 256;
+                
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                
+                function trackVoice() {
+                    if (mediaRecorder && mediaRecorder.state === "recording") {
+                        analyser.getByteFrequencyData(dataArray);
+                        let sum = 0;
+                        for(let i=0; i<bufferLength; i++) sum += dataArray[i];
+                        let average = sum / bufferLength;
+                        
+                        let openScale = Math.min(average / 8, 6); 
+                        if(openScale > 0.4) {
+                            mouthNode.style.height = `${2 + (openScale * 2.2)}px`;
+                            // बोलते समय बालों में भी थोड़ी सी वाइब्रेशन (Real Effect)
+                            hairL.style.transform = `skewX(${openScale * 0.5}deg)`;
+                            hairR.style.transform = `skewX(${-openScale * 0.5}deg)`;
+                        } else {
+                            mouthNode.style.height = "2px";
+                        }
+                        requestAnimationFrame(trackVoice);
+                    }
+                }
+                
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                    audioUrl = URL.createObjectURL(audioBlob);
+                    audioPlayback = new Audio(audioUrl);
+                    playBtn.disabled = false;
+                    setupPlaybackAnalyzer();
+                };
+
+                mediaRecorder.start();
+                trackVoice();
+                
+                statusLabel.innerText = "स्थिति: लाइव रिकॉर्डिंग...";
+                recordBtn.innerText = "🛑 रिकॉर्डिंग रोकें";
+                recordBtn.classList.add('recording');
+                
+                timerInterval = setInterval(() => {
+                    secondsElapsed++;
+                    updateTimerUI();
+                    if (secondsElapsed >= maxSeconds) stopRecording();
+                }, 1000);
+
+            } catch (err) {
+                alert("माइक एक्सेस अनुमति आवश्यक है: " + err);
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder) {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+            }
+            clearInterval(timerInterval);
+            statusLabel.innerText = "स्थिति: रिकॉर्डिंग सुरक्षित";
+            recordBtn.innerText = "🎙️ रिकॉर्डिंग शुरू करें (Max 5 Min)";
+            recordBtn.classList.remove('recording');
+            mouthNode.style.height = "2px";
+        }
+
+        function updateTimerUI() {
+            let min = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+            let sec = (secondsElapsed % 60).toString().padStart(2, '0');
+            timerDisplay.innerText = `${min}:${sec} / 05:00`;
+            progressBar.style.width = `${(secondsElapsed / maxSeconds) * 100}%`;
+        }
+
+        // --- प्लेबैक ऑडियो लिप-सिंक ट्रैकर ---
+        function setupPlaybackAnalyzer() {
+            playBtn.onclick = () => {
+                audioPlayback.play();
+                statusLabel.innerText = "स्थिति: बुलेटिन ऑन-एयर...";
+                
+                const playCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const playAnalyser = playCtx.createAnalyser();
+                const playSource = playCtx.createMediaElementSource(audioPlayback);
+                playSource.connect(playAnalyser);
+                playAnalyser.connect(playCtx.destination);
+                playAnalyser.fftSize = 256;
+                
+                const bufferLength = playAnalyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                
+                function trackPlayback() {
+                    if (!audioPlayback.paused) {
+                        playAnalyser.getByteFrequencyData(dataArray);
+                        let sum = 0;
+                        for(let i=0; i<bufferLength; i++) sum += dataArray[i];
+                        let average = sum / bufferLength;
+                        
+                        let openScale = Math.min(average / 8, 6);
+                        if(openScale > 0.4) {
+                            mouthNode.style.height = `${2 + (openScale * 2.2)}px`;
+                        } else {
+                            mouthNode.style.height = "2px";
+                        }
+                        requestAnimationFrame(trackPlayback);
+                    } else {
+                        mouthNode.style.height = "2px";
+                        statusLabel.innerText = "स्थिति: समाप्त";
+                    }
+                }
+                trackPlayback();
+            };
+        }
+    </script>
+</body>
+</html>
